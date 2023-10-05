@@ -29,11 +29,17 @@ class DisplayActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.textSizeSelectorButton).setOnClickListener{
             val launchIntent = Intent(this@DisplayActivity, TextSizeActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_TEXT_SIZE)
+            startActivityForResult(launchIntent, REQUEST_CODE_TEXT_SIZE)
 
         }
+    }
 
-
+    override fun onActivityResult(requestCode: Int, returnCode: Int, data : Intent?) {
+        super.onActivityResult(requestCode, returnCode, data)
+        if (requestCode == REQUEST_CODE_TEXT_SIZE && returnCode == Activity.RESULT_OK){
+            val selectedTextSize = data?.getIntExtra("selectedTextSize", 16) ?: 16
+            lyricsDisplayTextView.textSize =selectedTextSize.toFloat()
+        }
     }
 
 
